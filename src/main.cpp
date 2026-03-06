@@ -10,5 +10,6 @@ int main(int argc,char* argv[]){
     string firmware = argv[1];
     cout << "[+] Extracting firmware...\n";
     extract_firmware(firmware);
+
     return 0;
 }
