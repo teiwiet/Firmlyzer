@@ -1,4 +1,4 @@
-#include "../include/extractor.h"
+#include "../include/extract.h"
 #include<iostream>
 string extract_firmware(std::string& firmware){
     std::string cmd = "binwalk -e " + firmware;
