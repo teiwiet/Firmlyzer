@@ -6,6 +6,6 @@ string extract_firmware(std::string& firmware){
     if(!ret){
         cerr << "Extraction failed\n";
     }
-    return "_" + firmware + "extrected";
+    return "_" + firmware + ".extracted";
 };
 void detect_architecture(std::string file);

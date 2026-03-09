@@ -3,7 +3,7 @@
 #include<regex>
 #include "../include/analyzer.h"
 using namespace std;
-void detect_credentials(const string file){
+void detect_credentials(const string& file){
     ifstream f(file);
     if(!f.is_open()){
         cout << "Cannot open" << file;
@@ -16,7 +16,7 @@ void detect_credentials(const string file){
         }
     }
 };
-void detect_private_keys(const string file){
+void detect_private_keys(const string& file){
     ifstream f(file);
     if(!f.is_open()){
         cout << "Cannot open" << file;
@@ -29,7 +29,7 @@ void detect_private_keys(const string file){
         }
     }
 };
-void detect_dangerous_functions(const string file){
+void detect_dangerous_functions(const string& file){
      std::ifstream f(file);
     if(!f) return;
 
@@ -41,7 +41,7 @@ void detect_dangerous_functions(const string file){
         }
     }
 };
-void detect_command_injection(const string file){
+void detect_command_injection(const string& file){
      std::ifstream f(file);
     if(!f) return;
 
