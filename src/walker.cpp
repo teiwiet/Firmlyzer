@@ -8,6 +8,6 @@ void walk_filesystem(std::string& path){
         if(!fs::is_regular_file(p)){
             continue;
         }
-        scan_file(p);
+        scan_file(p.path().string());
     }
 };
