@@ -1,5 +1,4 @@
 #include "../include/scanner.h"
-#include "../include/scanner.h"
 #include "analyzer.h"
 
 #include <iostream>
