@@ -8,7 +8,7 @@ include_directories(include)
 
 add_executable(aforge
     src/main.cpp
-    src/extractor.cpp
+    src/extract.cpp
     src/walker.cpp
     src/scanner.cpp
     src/analyzer.cpp
