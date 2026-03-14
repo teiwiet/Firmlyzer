@@ -1,14 +1,11 @@
 #include "../include/extract.h"
-#include<iostream>
-std::string extract_firmware(filesystem::path & firmware){
-    std::string cmd = "binwalk -e " + firmware.string();
+#include <filesystem>
+string extract_firmware(const filesystem::path& path){
+    string cmd = "binwalk -e " + path.string();
     int ret = system(cmd.c_str());
     if(ret!=0){
-        cerr << "Extraction failed\n";
+        cerr << "Extraction failed";
     }
-    filesystem::path extracted =
-    firmware.parent_path() /
-    ("_" + firmware.filename().string() + ".extracted");
+    filesystem::path extracted = path.parent_path() / ("_" + path.filename().string() + ".extracted");
     return extracted.string();
 };
-void detect_architecture(std::string file);

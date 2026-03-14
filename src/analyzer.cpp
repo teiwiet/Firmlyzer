@@ -1,52 +1,52 @@
-#include<iostream>
-#include<fstream>
-#include<regex>
 #include "../include/analyzer.h"
-using namespace std;
-void log_finding(const std::string& msg){
-    std::ofstream out("report.txt", std::ios::app);
-    if(out){
-        out << msg << std::endl;
+
+void log_finding(const string& log){
+    static ofstream of("report.txt",ios::app);
+    if(of){
+        of << log << endl;
     }
-}
-void detect_credentials(const string& file){
-    ifstream f(file);
-    if(!f.is_open()){
-        cout << "Cannot open " << file << endl;
+};
+
+void detect_credentials(const filesystem::path& file){
+    ifstream f(file.string());
+    if(!f){
+        cout << "Cannot open : " << file << endl;
         return;
     }
-
     string line;
-    regex cred("(admin|root).{0,10}[:=].{1,20}");
-
+    regex cred("(root|admin|passwd)\\s*[:=]\\s*[^\\s]{1,20}", regex::icase);
+    smatch match;
     while(getline(f,line)){
-        if(regex_search(line,cred)){
-            string msg = "[!] Credential found in: " + file;
+        if(regex_search(line,match,cred)){
+            string msg = "[!] Credentials found in : " + file.string() + "->" + match.str();
             cout << msg << endl;
             log_finding(msg);
-        }
+            break;
+        };
     }
-}
-
-void detect_private_keys(const string& file){
+};
+void detect_private_keys(const filesystem::path& file){
     ifstream f(file);
-    if(!f.is_open()){
-        cout << "Cannot open " << file << endl;
-        return;
-    } 
-
+    if(!f){
+        cout << "Cannot open : " << file << endl;
+        return ;
+    }
     string line;
-
     while(getline(f,line)){
-        if(line.find("RSA PRIVATE KEY") != string::npos){
-            string msg = "[!] Private key found in: " + file;
+        if(
+            line.find("PRIVATE KEY") != string::npos || 
+            line.find("RSA PRIVATE KEY") != string::npos || 
+            line.find("CERTIFICATE") != string::npos
+        )
+        {
+            string msg = "[!] Private key or certificate found in : " + file.string();
             cout << msg << endl;
             log_finding(msg);
+            break;
         }
     }
-}
-
-void detect_dangerous_functions(const string& file){
+};
+void detect_dangerous_functions(const filesystem::path& file){
     ifstream f(file);
     if(!f) return;
 
@@ -54,14 +54,15 @@ void detect_dangerous_functions(const string& file){
 
     while(getline(f,line)){
         if(line.find("system(") != string::npos){
-            string msg = "[!] Dangerous function system() in " + file;
+            string msg = "[!] Dangerous function system() in " + file.string();
             cout << msg << endl;
             log_finding(msg);
+            break;
         }
     }
 }
 
-void detect_command_injection(const string& file){
+void detect_command_injection(const filesystem::path& file){
     ifstream f(file);
     if(!f) return;
 
@@ -71,9 +72,13 @@ void detect_command_injection(const string& file){
         if(line.find("QUERY_STRING") != string::npos &&
            line.find("system(") != string::npos){
 
-            string msg = "[!] Possible command injection in " + file;
+            string msg = "[!] Possible command injection in " + file.string();
             cout << msg << endl;
             log_finding(msg);
+            break;
         }
     }
 }
+
+
+

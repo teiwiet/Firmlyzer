@@ -1,6 +1,6 @@
 #pragma once 
-#include <filesystem>
-#include<string>
+#include<iostream>
+#include<filesystem>
 using namespace std;
-std::string extract_firmware(filesystem::path & firmware);
-void detect_architecture(std::string file);
+string extract_firmware(const filesystem::path& path);
+

@@ -1,3 +1,6 @@
-#pragma once
-#include<string>
-void walk_filesystem(std::string& path);
+#pragma once 
+#include<iostream>
+#include<filesystem>
+using namespace std;
+
+void walk_filesystem(const filesystem::path& path);

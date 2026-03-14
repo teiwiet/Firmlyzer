@@ -1,4 +1,4 @@
-#pragma once
-#include<string>
-
-void scan_file(const std::string& file);
+#pragma once 
+#include <iostream>
+using namespace std;
+void scan_file(const string& file);
